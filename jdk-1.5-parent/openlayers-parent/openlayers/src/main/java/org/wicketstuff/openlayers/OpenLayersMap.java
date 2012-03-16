@@ -58,7 +58,7 @@ import org.wicketstuff.openlayers.js.JSUtils;
 public class OpenLayersMap extends Panel implements IOpenLayersMap
 {
 
-	private static final String OPEN_LAYERS_VERSION = "2.9.1";
+	private static final String OPEN_LAYERS_VERSION = "2.11";
 
 	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
 	private String businessLogicProjection = null;
