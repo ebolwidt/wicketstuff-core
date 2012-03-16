@@ -88,6 +88,10 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		var self = this;
 		self.map.setCenter(center, zoom);		
 	}
+	this.setZoom = function (zoom) {
+        var self = this;
+        self.map.zoomTo(zoom);       
+    }
 	this.zoomToMaxExtent = function () {
 		var self = this;
 		self.map.zoomToMaxExtent();
