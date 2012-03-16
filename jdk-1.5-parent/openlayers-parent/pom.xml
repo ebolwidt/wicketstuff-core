@@ -12,6 +12,7 @@
 
 	<artifactId>openlayers-parent</artifactId>
 	<packaging>pom</packaging>
+        <version>1.5eb-SNAPSHOT</version>
 
 	<name>Openlayers Integration - Parent</name>
 	<description>

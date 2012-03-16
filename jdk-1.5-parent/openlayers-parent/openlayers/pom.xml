@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>openlayers-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5eb-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-openlayers</artifactId>
@@ -38,6 +38,11 @@
 			<name>Nino Martinez</name>
 			<id>nmwael</id>
 			<email>nino.martinez.wael@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Erwin Bolwidt</name>
+			<id>ebolwidt</id>
+			<email>ebolwidt@worldturner.com</email>
 		</developer>
 	</developers>
 
