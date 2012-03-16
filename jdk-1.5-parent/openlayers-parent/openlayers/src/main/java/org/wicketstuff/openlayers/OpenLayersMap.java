@@ -679,21 +679,6 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		else
 			return "";
 	}
-	
-	private String getJSsetDoubleClickZoomEnabled(boolean enabled)
-	{
-		return getJSinvoke("setDoubleClickZoomEnabled(" + enabled + ")");
-	}
-
-	private String getJSsetDraggingEnabled(boolean enabled)
-	{
-		return getJSinvoke("setDraggingEnabled(" + enabled + ")");
-	}
-
-	private String getJSsetScrollWheelZoomEnabled(boolean enabled)
-	{
-		return getJSinvoke("setScrollWheelZoomEnabled(" + enabled + ")");
-	}
 
 	private String getJSsetZoom(Integer zoom)
 	{
