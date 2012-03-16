@@ -10,6 +10,8 @@ public class OSM extends Layer implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final String OSMARENDER_URL = "http://tah.openstreetmap.org/Tiles/tile/${z}/${x}/${y}.png";
 
 	public static enum OSMLayer
 	{
@@ -44,8 +46,8 @@ public class OSM extends Layer implements Serializable
 				return getJSconstructor("OpenLayers.Layer.OSM.Mapnik", Arrays.asList(quotedName));
 
 			case TilesAtHome :
-				return getJSconstructor("OpenLayers.Layer.OSM.Osmarender",
-					Arrays.asList(quotedName));
+				return getJSconstructor("OpenLayers.Layer.OSM",
+					Arrays.asList(quotedName, JSUtils.getQuotedString(OSMARENDER_URL)));
 			case CycleMap :
 				return getJSconstructor("OpenLayers.Layer.OSM.CycleMap", Arrays.asList(quotedName));
 			default :
