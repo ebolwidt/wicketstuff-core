@@ -669,13 +669,32 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	}
 
 	private String getJSsetCenter(LonLat center, Integer zoom) {
-		String transformation = "";
-		if (getBusinessLogicProjection() != null) {
-			transformation = ".transform(new OpenLayers.Projection(\"" + getBusinessLogicProjection() + "\"), "
-					+ getJSinvokeNoLineEnd("map") + ".getProjectionObject())";
+		String centerJs;
+		if (center == null)
+		{
+			centerJs = "null";
 		}
-		if (center != null && zoom != null)
-			return getJSinvoke("setCenter(" + center.getJSconstructor() + transformation + ", " + zoom + ")");
+		else
+		{
+			String transformation = "";
+			if (getBusinessLogicProjection() != null)
+			{
+				transformation = ".transform(new OpenLayers.Projection(\"" + getBusinessLogicProjection() + "\"), "
+						+ getJSinvokeNoLineEnd("map") + ".getProjectionObject())";
+			}
+			centerJs = center.getJSconstructor() + transformation;
+		}
+		String zoomJs;
+		if (zoom == null)
+		{
+			zoomJs = "null";
+		}
+		else
+		{
+			zoomJs = String.valueOf(zoom);
+		}
+		if (center != null || zoom != null)
+			return getJSinvoke("setCenter(" + centerJs + ", " + zoomJs + ")");
 		else
 			return "";
 	}
@@ -768,10 +787,16 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	 */
 	public void setCenter(LonLat center, Integer zoom)
 	{
-		if (!this.center.equals(center))
+		if (!this.center.equals(center) || (zoom != null && this.zoom != zoom.intValue()))
 		{
-			this.center = center;
-			this.zoom = zoom;
+			if (center != null)
+			{
+				this.center = center;
+			}
+			if (zoom != null)
+			{
+				this.zoom = zoom;
+			}
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
@@ -871,7 +896,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	public void setCenter(LonLat center)
 	{
-		setCenter(center, zoom);
+		setCenter(center, null);
 	}
 
 	/**
