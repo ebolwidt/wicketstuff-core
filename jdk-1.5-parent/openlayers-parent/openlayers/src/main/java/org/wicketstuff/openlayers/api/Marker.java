@@ -143,7 +143,7 @@ public class Marker extends Overlay
 		this.icon = icon;
 	}
 
-	public void setLagLng(LonLat gLatLng)
+	public void setLatLng(LonLat gLatLng)
 	{
 		lonLat = gLatLng;
 	}
