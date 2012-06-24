@@ -61,8 +61,8 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		params["center"] = this.map.getCenter();
 		params["bounds"] = this.map.getExtent();
 		params["zoom"] = this.map.getZoomForExtent(this.map.getExtent(), false);
-		params["centerConverted"] = this.businessLogicProjection != null ? this.map.getCenter().clone().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getCenter();
-		params["boundsConverted"] = this.businessLogicProjection != null ? this.map.getExtent().clone().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getExtent();
+		params["centerConverted"] = this.convertToBusinessLogicProjection(this.map.getCenter())
+		params["boundsConverted"] = this.convertToBusinessLogicProjection(this.map.getExtent())
 		params["zoomConverted"] = this.map.getZoomForExtent(this.map.getExtent(), true);
 		for (var key in params) {
 			callBack = callBack + "&" + key + "=" + params[key];
@@ -118,7 +118,8 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		var self = this;
 		self.map.events.register("click", self.map, function (e) {
 			var lonlat = self.map.getLonLatFromViewPortPx(e.xy);
-			self.onEvent(callBack, {"lon":lonlat.lon, "lat":lonlat.lat});
+			var lonlatConverted = self.convertToBusinessLogicProjection(lonlat)
+			self.onEvent(callBack, {"lon":lonlat.lon, "lat":lonlat.lat, "lonConverted": lonlatConverted.lon, "latConverted": lonlatConverted.lat});
 		});
 	};
 	this.popupInfo = function (callBack, marker, wicketOMap, evt) {
@@ -208,6 +209,13 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		this.layers[1] = this.openOverlays;
 		this.layers[1].setVisibility(visible);
 	};
+	this.moveMarker = function(id, lonlat) {
+	    // TODO
+	    var marker = this.getMarker(id);
+	    //px = map.getLayerPxFromViewPortPx(map.getPixelFromLonLat(new OpenLayers.LonLat(lon, lat).transform(map.displayProjection, map.projection)));
+	    var px = this.map.getLayerPxFromViewPortPx(this.map.getPixelFromLonLat(lonlat));
+	    marker.moveTo(px);
+	}
 	this.toggleLayer = function (layerId) {
 		var layer = this.layers[layerId];
 		var visible = layer.getVisibility();
@@ -266,6 +274,7 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 	}
 	this.setBusinessLogicProjection = function (newProjection) {
 		this.businessLogicProjection = newProjection;
+		this.businessLogicProjectionObject = new OpenLayers.Projection(this.businessLogicProjection);
 	}
 	
 	this.convertArray = function (points, projection) {
@@ -275,6 +284,14 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 			result.push(new OpenLayers.Geometry.Point(points[i],points[i+1]).transform(new OpenLayers.Projection(projection), this.map.getProjectionObject()));
 		return result.length == 1 ? result[0] : result;
 	}
+	
+	this.convertToBusinessLogicProjection = function (lonlat) {
+	    return this.businessLogicProjectionObject != null ? lonlat.clone().transform(this.map.getProjectionObject(), this.businessLogicProjectionObject) : lonlat;
+	}
+	
+	this.convertFromBusinessLogicProjection = function (lonlat) {
+        return this.businessLogicProjectionObject != null ? lonlat.clone().transform(this.businessLogicProjectionObject, this.map.getProjectionObject()) : lonlat;
+    }
 }
 
 function convertArray(points) {

@@ -668,22 +668,20 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		return getJSinvoke("panDirection(" + dx + "," + dy + ")");
 	}
 
-	private String getJSsetCenter(LonLat center, Integer zoom) {
-		String centerJs;
-		if (center == null)
+	public String getJSlonLat(LonLat lonLat)
+	{
+		if (lonLat == null)
 		{
-			centerJs = "null";
+			return "null";
 		}
 		else
 		{
-			String transformation = "";
-			if (getBusinessLogicProjection() != null)
-			{
-				transformation = ".transform(new OpenLayers.Projection(\"" + getBusinessLogicProjection() + "\"), "
-						+ getJSinvokeNoLineEnd("map") + ".getProjectionObject())";
-			}
-			centerJs = center.getJSconstructor() + transformation;
+			return getJSinvokeNoLineEnd("convertFromBusinessLogicProjection(" + lonLat.getJSconstructor() + ")");
 		}
+	}
+	
+	private String getJSsetCenter(LonLat center, Integer zoom) {
+		String centerJs = getJSlonLat(center);		
 		String zoomJs;
 		if (zoom == null)
 		{

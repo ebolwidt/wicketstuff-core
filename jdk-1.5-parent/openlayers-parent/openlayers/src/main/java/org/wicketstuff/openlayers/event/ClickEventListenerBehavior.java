@@ -26,8 +26,8 @@ public abstract class ClickEventListenerBehavior extends EventListenerBehavior
 	protected void onEvent(AjaxRequestTarget target)
 	{
 		Request request = RequestCycle.get().getRequest();
-		String lon = request.getRequestParameters().getParameterValue("lon").toString();
-		String lat = request.getRequestParameters().getParameterValue("lat").toString();
+		String lon = request.getRequestParameters().getParameterValue("lonConverted").toString();
+		String lat = request.getRequestParameters().getParameterValue("latConverted").toString();
 		LonLat lonLat = new LonLat(Double.parseDouble(lon), Double.parseDouble(lat));
 		onClick(lonLat, target);
 

@@ -191,6 +191,18 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		}
 	}
 
+	public String getJSlonLat(LonLat lonLat)
+	{
+		if (lonLat == null)
+		{
+			return "null";
+		}
+		else
+		{
+			return getJSinvokeNoLineEnd("convertFromBusinessLogicProjection(" + lonLat.getJSconstructor() + ")");
+		}
+	}
+	
 	private String getJSSetCenter()
 	{
 		if (center == null)

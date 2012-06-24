@@ -28,6 +28,8 @@ public interface IOpenLayersMap
 {
 	public String getJSinvoke(String invocation);
 
+	public String getJSlonLat(LonLat lonLat);
+	
 	public String getJSinvokeNoLineEnd(String invocation);
 
 	public String getJSInstance();
