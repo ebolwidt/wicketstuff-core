@@ -533,6 +533,11 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			js.append("new WicketOMap('" + map.getMarkupId() + "', null, null, " +
 				String.valueOf(showMarkersInLayerSwitcher) + ");\n");
 		}
+		
+		if (businessLogicProjection != null)
+		{
+			js.append(getJSSetBusinessLogicProjection());
+		}
 
 		for (Layer layer : layers)
 		{
@@ -599,10 +604,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		}
 		js.append(getJSinvoke("setPopupId('" + getInfoWindow().getContent().getMarkupId() + "')"));
 
-		if (businessLogicProjection != null)
-		{
-			js.append(getJSSetBusinessLogicProjection());
-		}
+
 
 		return js.toString();
 	}

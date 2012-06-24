@@ -400,6 +400,10 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 			js.append("new WicketOMap('" + this.getMarkupId() + "', null" + jsMarkersLayerName +
 				", true);\n");
 		}
+		if (businessLogicProjection != null)
+		{
+			js.append(getJSSetBusinessLogicProjection());
+		}
 		for (FeatureStyle featureStyle : featureStyles)
 		{
 			js.append(featureStyle.getJSAddStyle(this));
@@ -430,10 +434,6 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		for (Overlay overlay : overlays)
 		{
 			js.append(getJsOverlay(overlay));
-		}
-		if (businessLogicProjection != null)
-		{
-			js.append(getJSSetBusinessLogicProjection());
 		}
 		return js.toString();
 	}
