@@ -143,9 +143,9 @@ public class Marker extends Overlay
 		this.icon = icon;
 	}
 
-	public void setLagLng(LonLat gLatLng)
+	public void setLonLat(LonLat gLonLat)
 	{
-		lonLat = gLatLng;
+		lonLat = gLonLat;
 	}
 
 	public void setMap(IOpenLayersMap map)
